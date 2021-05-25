@@ -65,8 +65,6 @@ async def alert():
                             embed.add_field(name="Slots", value='\n'.join(
                                 k['slots']), inline=False)
                             await client.get_channel(841330475742265385).send(embed=embed)
-                                
-
                     else:
                         continue
             else:
