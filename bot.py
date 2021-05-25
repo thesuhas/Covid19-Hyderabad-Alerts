@@ -18,6 +18,10 @@ async def on_ready():
     alert.start()
     await client.get_channel(841330475742265385).send("Bot is ready")
 
+@client.command()
+async def ping(ctx):
+    await ctx.send(f"Ping: {round(client.latency * 1000)}ms")
+
 
 @tasks.loop(seconds=20)
 async def alert():
