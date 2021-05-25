@@ -5,7 +5,7 @@ import requests
 import math
 import os
 from dotenv import load_dotenv
-import pprint
+
 
 load_dotenv()
 
