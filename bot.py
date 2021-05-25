@@ -16,7 +16,7 @@ client.remove_command('help')
 @client.event
 async def on_ready():
     alert.start()
-    await client.get_channel(841330475742265385).send("Bot is ready")
+    await client.get_channel(846785400726224976).send("Bot is ready")
 
 @client.command()
 async def ping(ctx):
@@ -68,7 +68,7 @@ async def alert():
                                 name='Fee type', value=k['fee_type'], inline=False)
                             embed.add_field(name="Slots", value='\n'.join(
                                 k['slots']), inline=False)
-                            await client.get_channel(841330475742265385).send(embed=embed)
+                            await client.get_channel(846785400726224976).send(embed=embed)
                     else:
                         continue
             else:
