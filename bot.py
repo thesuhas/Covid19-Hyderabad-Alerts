@@ -23,7 +23,7 @@ async def ping(ctx):
     await ctx.send(f"Ping: {round(client.latency * 1000)}ms")
 
 
-@tasks.loop(seconds=20)
+@tasks.loop(seconds=30)
 async def alert():
     #print("ping")
     date = datetime.datetime.now().strftime("%d-%m-%Y")
@@ -31,8 +31,8 @@ async def alert():
                datetime.timedelta(days=1)).strftime("%d-%m-%Y")
     date2 = (datetime.datetime.now() +
                datetime.timedelta(days=2)).strftime("%d-%m-%Y")
-    dates = [date, datetom, date2]
-    d_ids = [581, 603, 604, 596]
+    dates = [date, datetom]
+    d_ids = [581, 603, 604]
     for j in d_ids:
         url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict"
         for i in dates:
@@ -47,7 +47,7 @@ async def alert():
                 resp = res.json()
                 for k in resp['sessions']:
                     if(len(k) != 0):
-                        if(math.trunc(k['available_capacity_dose1']) >= 1 and k['min_age_limit'] == 18 and ((k['available_capacity_dose1'])-int(k['available_capacity_dose1'])) == 0):
+                        if(math.trunc(k['available_capacity_dose1']) >= 8 and k['min_age_limit'] == 18 and ((k['available_capacity_dose1'])-int(k['available_capacity_dose1'])) == 0):
                             embed = discord.Embed(
                                 title=f"Vaccine Available at {k['name']}", color=discord.Color.green())
                             embed.add_field(
@@ -69,9 +69,11 @@ async def alert():
                             embed.add_field(name="Slots", value='\n'.join(
                                 k['slots']), inline=False)
                             await client.get_channel(846785400726224976).send(embed=embed)
+                          
                     else:
                         continue
             else:
+                await client.get_channel(841330475742265385).send('Message Rohan,there is an error lol'+str(res.status_code))
                 continue
 
 client.run(os.getenv("TOKEN"))
