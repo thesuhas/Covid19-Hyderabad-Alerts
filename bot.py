@@ -5,7 +5,8 @@ import requests
 import math
 import os
 from dotenv import load_dotenv
-
+import schedule
+import time
 
 load_dotenv()
 
@@ -13,24 +14,26 @@ load_dotenv()
 client = commands.Bot(command_prefix='.', intents=discord.Intents.all())
 client.remove_command('help')
 
+
 @client.event
 async def on_ready():
-    alert.start()
+    # alert.start()
     await client.get_channel(846785400726224976).send("Bot is ready")
+
 
 @client.command()
 async def ping(ctx):
     await ctx.send(f"Ping: {round(client.latency * 1000)}ms")
 
 
-@tasks.loop(seconds=30)
+# @tasks.loop(seconds=30)
 async def alert():
-    #print("ping")
+    # print("ping")
     date = datetime.datetime.now().strftime("%d-%m-%Y")
     datetom = (datetime.datetime.now() +
                datetime.timedelta(days=1)).strftime("%d-%m-%Y")
     date2 = (datetime.datetime.now() +
-               datetime.timedelta(days=2)).strftime("%d-%m-%Y")
+             datetime.timedelta(days=2)).strftime("%d-%m-%Y")
     dates = [date, datetom]
     d_ids = [581, 603, 604]
     for j in d_ids:
@@ -41,7 +44,7 @@ async def alert():
             data = {"district_id": j, "date": i}
             res = requests.get(url, headers=headers, params=data)
             #resp = res.json()
-            #print(res.json())
+            # print(res.json())
             #print(res.status_code, j)
             if(res.status_code == 200):
                 resp = res.json()
@@ -69,7 +72,7 @@ async def alert():
                             embed.add_field(name="Slots", value='\n'.join(
                                 k['slots']), inline=False)
                             await client.get_channel(846785400726224976).send(embed=embed)
-                          
+
                     else:
                         continue
             else:
@@ -77,3 +80,8 @@ async def alert():
                 continue
 
 client.run(os.getenv("TOKEN"))
+schedule.every(10).seconds.do(alert)
+while True:
+    print('running')
+    schedule.run_pending()
+    time.sleep(1)
