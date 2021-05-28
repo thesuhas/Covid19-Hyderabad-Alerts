@@ -5,30 +5,32 @@ import requests
 import math
 import os
 from dotenv import load_dotenv
-import schedule
+#import schedule
 import time
-
+import asyncio
 load_dotenv()
 
 # Create a bot instance and sets a command prefix
-client = commands.Bot(command_prefix='.', intents=discord.Intents.all())
-client.remove_command('help')
+'''client = commands.Bot(command_prefix='.', intents=discord.Intents.all())
+client.remove_command('help')'''
+client = discord.Client()
 
 
 @client.event
 async def on_ready():
     # alert.start()
+    print('test')
     await client.get_channel(846785400726224976).send("Bot is ready")
 
 
-@client.command()
+'''@client.command()
 async def ping(ctx):
-    await ctx.send(f"Ping: {round(client.latency * 1000)}ms")
+    await ctx.send(f"Ping: {round(client.latency * 1000)}ms")'''
 
 
 # @tasks.loop(seconds=30)
 async def alert():
-    # print("ping")
+    print("ping")
     date = datetime.datetime.now().strftime("%d-%m-%Y")
     datetom = (datetime.datetime.now() +
                datetime.timedelta(days=1)).strftime("%d-%m-%Y")
@@ -78,10 +80,12 @@ async def alert():
             else:
                 await client.get_channel(841330475742265385).send('Message Rohan,there is an error lol'+str(res.status_code))
                 continue
+    await asyncio.sleep(20)
 
+client.loop.create_task(alert())
 client.run(os.getenv("TOKEN"))
-schedule.every(10).seconds.do(alert)
+'''schedule.every(10).seconds.do(alert)
 while True:
     print('running')
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(1)'''
