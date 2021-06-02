@@ -33,7 +33,7 @@ async def alert():
     await client.wait_until_ready()
     while True:
         print("ping")
-        await client.get_channel(849518539140366427).send(embed=embed)
+        await client.get_channel(849518539140366427).send('Bot is pinging')
         date = datetime.datetime.now().strftime("%d-%m-%Y")
         datetom = (datetime.datetime.now() +
                    datetime.timedelta(days=1)).strftime("%d-%m-%Y")
