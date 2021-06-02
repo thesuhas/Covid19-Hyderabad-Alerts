@@ -51,6 +51,7 @@ async def alert():
                 #resp = res.json()
                 # print(res.json())
                 #print(res.status_code, j)
+                await client.get_channel(849518539140366427).send(str(res.status_code))
                 if(res.status_code == 200):
                     resp = res.json()
                     for k in resp['sessions']:
