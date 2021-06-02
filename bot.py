@@ -33,6 +33,7 @@ async def alert():
     await client.wait_until_ready()
     while True:
         print("ping")
+        await client.get_channel(849518539140366427).send(embed=embed)
         date = datetime.datetime.now().strftime("%d-%m-%Y")
         datetom = (datetime.datetime.now() +
                    datetime.timedelta(days=1)).strftime("%d-%m-%Y")
@@ -76,11 +77,14 @@ async def alert():
                                 embed.add_field(name="Slots", value='\n'.join(
                                     k['slots']), inline=False)
                                 await client.get_channel(846785400726224976).send(embed=embed)
+                                await client.get_channel(849518939948056597).send(embed=embed)
 
                         else:
                             continue
                 else:
+
                     await client.get_channel(841330475742265385).send('Message Rohan,there is an error lol'+str(res.status_code))
+                    await client.get_channel(849518539140366427).send('Message Rohan,there is an error lol'+str(res.status_code))
                     continue
         await asyncio.sleep(20)
         print('res')
