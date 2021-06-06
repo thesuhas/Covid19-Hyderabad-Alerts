@@ -9,11 +9,11 @@ from dotenv import load_dotenv
 import time
 import asyncio
 load_dotenv()
-
+from app import client
 # Create a bot instance and sets a command prefix
 '''client = commands.Bot(command_prefix='.', intents=discord.Intents.all())
 client.remove_command('help')'''
-client = discord.Client()
+#client = discord.Client()
 
 
 @client.event
@@ -91,7 +91,7 @@ async def alert():
         print('res')
 
 client.loop.create_task(alert())
-client.run(os.getenv("TOKEN"))
+#client.run(os.getenv("TOKEN"))
 '''schedule.every(10).seconds.do(alert)
 while True:
     print('running')
